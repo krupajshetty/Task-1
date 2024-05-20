@@ -1,0 +1,49 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from google.colab import files
+uploaded=files.upload()
+
+df=pd.read_csv('/content/population.csv')
+df
+df.shape
+df.info()
+df.describe()
+df.isnull().sum()
+df.dropna(inplace=True)
+df_1=df.drop_duplicates()
+df_1.info()
+df.sample(n=4)
+
+total_population=df[df['Indicator Code']=='SP.POP.TOTL']
+total_population.head()
+total_population_sort_1960=total_population.sort_values(by='1960',ascending=False)
+total_population_sort_1960
+
+total_largest_population_1960=total_population_sort_1960.head(10)
+print("Top 10 countries with the largest population in 1960")
+total_largest_population_1960
+
+total_population_sort_2022=total_population.sort_values(by='2022',ascending=False)
+total_population_sort_2022
+total_largest_population_2022=total_population_sort_2022.head(10)
+print("Top 10 countries with the largest population in 2022")
+total_largest_population_2022
+
+plt.figure(figsize=(20,15))
+plt.rcParams['axes.facecolor'] = 'white'
+
+plt.subplot(2,2,1)
+plot = sns.barplot(y="Country Name", x="2022", data=total_largest_population_2022, palette="magma")
+plt.title("Top 10 countries Of Total Population 2022")
+plt.xlabel("Total population")
+plt.ylabel("Country")
+
+plt.subplot(2,2,2)
+plot = sns.barplot(y="Country Name", x="1960", data=total_largest_population_1960, palette="magma")
+plt.title("Top Ten countries of Total Population in 1960")
+plt.xlabel("Total population")
+plt.ylabel("Country")
+
+plt.tight_layout()
+
